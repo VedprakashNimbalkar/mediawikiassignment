@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb-secret
+type: Opaque
+data:
+  mariadb-root-password: dGVzdDEyMw==
+  mariadb-mysql-password: dGVzdDEyMzQ=
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-deployment
+  labels:
+    app: mariadb
+spec:
+  replica: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: ghcr.io/vedprakashnimbalkar/mediawikidb:1.0
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom: 
+            secreteKeyRef:
+              name: mariadb-secret
+              key: mariadb-root-password
+        - name: MYSQL_DATABASE
+          value: my_wiki
+        - name: MYSQL_USER
+          value: wiki
+        - name: MYSQL_PASSWORD
+          valueFrom: 
+            secreteKeyRef:
+              name: mariadb-secret
+              key: mariadb-mysql-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-service
+spec:
+  selector:
+    app: mariadb
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+      
