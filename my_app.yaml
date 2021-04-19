@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mariadb:
+    image: ghcr.io/vedprakashnimbalkar/mediawikidb:1.0
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=test123
+      - MYSQL_DATABASE=my_wiki
+      - MYSQL_USER=wiki
+      - MYSQL_PASSWORD=test1234  
+  my_app: 
+    image: ghcr.io/vedprakashnimbalkar/mediawikiapp:1.0
+    ports:
+      - 80:80
+      - 443:443
+  
