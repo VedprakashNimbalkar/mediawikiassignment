@@ -7,4 +7,4 @@ sudo docker run --name=mediawikibatabase -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=
 
 docker run -d -h vedassignment@thoughtworks.com --name=mediawiki_app -p 80:80 -p 443:443 -it 67a1d790c31f
 
-
+docker-compose -f my_app.yaml up
