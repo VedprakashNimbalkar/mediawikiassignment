@@ -14,7 +14,7 @@ metadata:
   labels:
     app: mariadb
 spec:
-  replica: 1
+  replicas: 1
   selector:
     matchLabels:
       app: mariadb
@@ -30,8 +30,8 @@ spec:
         - containerPort: 3306
         env:
         - name: MYSQL_ROOT_PASSWORD
-          valueFrom: 
-            secreteKeyRef:
+          valueFrom:
+            secretKeyRef:
               name: mariadb-secret
               key: mariadb-root-password
         - name: MYSQL_DATABASE
@@ -39,8 +39,8 @@ spec:
         - name: MYSQL_USER
           value: wiki
         - name: MYSQL_PASSWORD
-          valueFrom: 
-            secreteKeyRef:
+          valueFrom:
+            secretKeyRef:
               name: mariadb-secret
               key: mariadb-mysql-password
 ---
@@ -55,4 +55,5 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
-      
+
+
