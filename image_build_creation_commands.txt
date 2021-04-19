@@ -1,0 +1,10 @@
+
+sudo docker build -t mediawikidb:1.0 .
+
+sudo docker build -t mediawikiapp:1.0 .
+
+sudo docker run --name=mediawikibatabase -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=test123 -e MYSQL_DATABASE=my_wiki -e MYSQL_USER=wiki -e MYSQL_PASSWORD=test1234 83b7b1558c24
+
+docker run -d -h vedassignment@thoughtworks.com --name=mediawiki_app -p 80:80 -p 443:443 -it 67a1d790c31f
+
+
