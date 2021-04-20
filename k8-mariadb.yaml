@@ -23,9 +23,12 @@ spec:
       labels:
         app: mariadb
     spec:
+      imagePullSecrets:
+      - name: mygithub.com-token
       containers:
       - name: mariadb
-        image: ghcr.io/vedprakashnimbalkar/mediawikidb:1.0
+        image: vedprakashnimbalkar/mediawikidb:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3306
         env:
@@ -55,5 +58,3 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
-
-
