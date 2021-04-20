@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,9 +15,12 @@ spec:
       labels:
         app: mediawiki
     spec:
+      imagePullSecrets:
+      - name: mygithub.com-token
       containers:
       - name: mediawiki
-        image: ghcr.io/vedprakashnimbalkar/mediawikiapp:1.0
+        image: vedprakashnimbalkar/mediawikiapp:1.0
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 ---
@@ -32,5 +36,22 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30000
-
+      nodePort: 31000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mediawiki-ingress
+  namespace: mediawiki-service
+spec:
+  rules:
+  - host: assignment.com
+    http:
+      paths: 
+      - path: /var/www/mediawiki
+        pathType: Prefix
+        backend:
+          service:
+            name: mediawiki-service
+            port:
+              number: 31000
